@@ -1,0 +1,300 @@
+#ECHO
+T
+
+#INCLUDE
+RESTART.in
+
+#DESCRIPTION
+Restart CUSIA event with time accurate mode on and two-way coupling of CIMI
+
+#COMPONENTMAP
+GM 0 -1 1
+IE 0  1 1
+IM 0  11 0
+
+#TIMEACCURATE
+T			DoTimeAccurate
+
+#ENDTIME            
+2012	    		year
+10              	month
+09              	day
+12		        hour
+00             		minute
+00              	second
+0.0		        FracSecond
+
+#SAVERESTART
+T			DoSaveRestart
+-1			DnSaveRestart
+900.0			DtSaveRestart
+
+#CHECKSTOP
+T			DoCheckStop
+-1			DnCheckStop
+120.0			DtCheckStop
+
+#CPUTIMEMAX
+27000			!Max is 24:00
+
+#COMPONENT
+IM			NameComp
+T			UseComp
+
+#COUPLE2
+GM			NameComp1
+IE			NameComp2
+-1			DnCouple
+5.0			DtCouple
+
+#COUPLE2
+GM			NameSource
+IM			NameTarget
+-1			DnCouple
+5.0			DtCouple
+
+#COUPLE1
+IE			NameSource
+IM			NameTarget
+-1			DnCouple
+5.0			DtCouple
+
+#PROGRESS
+10			DnProgressShort
+100			DnProgressLong
+
+#CHECKTIMESTEP
+F               DoCheckTimeStep
+2               DnCheckTimeStep
+1e-6            TimeStepMin
+
+#BEGIN_COMP GM ---------------------------------------------------------------
+
+#INCLUDE
+GM/restartIN/restart.H
+
+#INCLUDE
+SAT_MASTER.in
+
+#NONCONSERVATIVE
+T                       UseNonConservative
+
+#CONSERVATIVECRITERIA
+1			nConservCrit
+parabola		TypeConservCrit_I
+ 5.0			xParabolaConserv
+15.0			yParabolaConserv
+
+#SCHEME
+2			nOrder
+Rusanov			TypeFlux
+mc3			TypeLimiter
+1.2			LimiterBeta
+
+#BORIS
+T
+0.05
+
+#TIMESTEPPING
+2			nStage
+0.85			CflExpl
+
+#OUTERBOUNDARY
+outflow                 TypeBC_I(east_)
+vary                    TypeBC_I(west_)
+float                   TypeBC_I(south_)
+float                   TypeBC_I(north_)
+float                   TypeBC_I(bot_)
+float                   TypeBC_I(top_)
+
+#INNERBOUNDARY
+ionosphere
+
+#SOLARWINDFILE
+T                       UseSolarWindFile (rest of parameters read if true)
+IMF.dat                 NameSolarWindFile
+
+#SAVELOGFILE
+T			DoSaveLogfile
+VAR			StringLogfile
+-1			DnSaveLogfile
+1.0			DtSaveLogfile
+dt rho mx my mz p bx by bz pmin pmax dst dstdivb dstflx
+3.0 3.5 5.0		StringRFlux
+
+#IMCOUPLING
+5.0			TauCoupleIM
+T			DoImSatTrace
+T			DoCoupleImPressure
+T			DoCoupleImDensity
+1e-4			DensityCoupleFloor
+F			DoFixPolarRegion
+
+! Pressures below pMinDim are replaced with pMinDim.
+#MINIMUMPRESSURE
+1e-4			pMinDim [nPa]
+-1.0			pMinDim for fluid 2
+2e-4			PeMinDim for electron pressure
+
+! Density below DenMinDim are replaced with RhoMinDim.
+#MINIMUMDENSITY
+1e-4			RhoMinDim
+
+#ANISOPRESSUREIM
+T			DoAnisoPressureIMCoupling
+
+#SAVEPLOT
+4			nPlotFile
+3d FUL idl		StringPlot
+-1			DnSavePlot
+1800.			DtSavePlot
+-1.			DxSavePlot
+y=0 FUL idl		StringPlot
+-1			DnSavePlot
+60.			DtSavePlot
+-1.			DxSavePlot
+z=0 FUL idl		StringPlot
+-1			DnSavePlot
+60.			DtSavePlot
+-1.			DxSavePlot
+1d FUL idl		StringPlot
+-1			DnSavePlot
+60.			DtSavePlot
+-1.			DxSavePlot
+
+#MAGNETOMETER
+mags_all.dat
+single                  TypeFileOut
+-1                      DnOutput
+10.0			DtOutput
+
+#MAGNETOMETERGRID
+real8			TypeFileMagGrid
+GEO			TypeCoordMagGrid
+72			nLonMagGrid
+34			nLatMagGrid
+   0.0			LonMinMagGrid
+ 360.0			LonMaxMagGrid
+ -85.0			LatMinMagGrid
+  85.0			LatMaxMagGrid
+  -1			DnSaveMagGrid
+  60.0			DtSaveMagGrid
+
+#END_COMP GM -----------------------------------------------------------------
+
+#BEGIN_COMP IE ---------------------------------------------------------------
+
+#IONOSPHERE
+5                       TypeConductanceModel
+F                       UseFullCurrent
+F			UseFakeRegion2
+105.9                   F107Flux
+  1.0			StarLightPedConductance
+  0.25			PolarCapPedConductance
+
+#SAVEPLOT
+1			nPlotFile
+max idl                 StringPlot
+-1			DnSavePlot
+60.0			DtSavePlot
+
+#SPS
+T			UseSPS
+
+#DEBUG
+0			iDebugLevel
+0			iDebugProc
+
+#END_COMP IE -----------------------------------------------------------------
+
+#BEGIN_COMP IM ---------------------------------------------------------------
+
+INCLUDE
+IM/restartIN/restart.H
+
+#RESTART
+F			IsRestart
+F			ReadRestartSat
+
+#STRONGDIFFUSION
+F
+
+#SMOOTH
+F			UseSmooth
+300.0			SmoothWindow
+
+#BMODEL
+MHD			NameModel
+
+#IEMODEL
+F			UseWeimer
+
+#SAVEPLOT
+3			nCIMIPlotType
+2d eq			StringPlot
+60.			DtOutput
+fls all			StringPlot
+60.			DtOutput
+T			DoSaveSeparateFiles
+psd e			StringPlot
+60.			DtOutput
+T			DoSaveSeparateFiles
+
+#MINIMUMPRESSURETOGM
+1e-4			MinimumPressureToGM
+
+#INITIALF2
+F			IsEmptyInitial
+T			IsGmInitial
+F			IsDataInitial
+F			IsRBSPData
+
+#TYPEBOUNDARY
+Circle			TypeBoundary
+
+#PLASMASHEET
+F			UseYoungEtAl
+F			UseBoundaryEbihara
+
+#SAVELOG
+60.0			DtLogOut
+
+#PRERUNFIELD
+T			DoWritePrerun
+F			UsePrerun
+0.0			DtRead
+
+#PRERUNSAT
+T			DoWritePrerunSat
+F			UsePrerunSat
+0.0			DtReadSat
+
+#IMTIMESTEP
+5.0			IMDt
+5.0			IMDtMax
+
+#DTSATOUT
+5.0			DtSatOut
+
+! Number density fractions for H+ and O+. Has to add up to 1.0
+#COMPOSITION
+FIXED			NameCompModel
+0.8			Fraction_H+
+0.2			Fraction_O+
+1.0			Fraction_e-
+
+! Decay for CIMI particle densities
+#DECAY
+T 			UseDecay
+36000.			DecayTimescale in seconds
+
+#SETRB
+12.			rb [R_E]
+
+#SETBOUNDARYPARAMS
+ 4.0			DeltaRmax
+10.0			DeltaMLTmax
+
+#END_COMP IM -----------------------------------------------------------------
+
+#END

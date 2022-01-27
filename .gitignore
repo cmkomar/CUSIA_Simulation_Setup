@@ -1,0 +1,13 @@
+# Analysis files
+*.ipynb
+*.py
+*.pro
+
+# Run output directories
+run*
+
+# Text files
+*.txt
+
+# Temporary files
+*~

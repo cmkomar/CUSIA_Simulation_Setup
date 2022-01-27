@@ -1,0 +1,62 @@
+#SATELLITE
+15			nSatellite
+MHD			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/cluster1.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/cluster2.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/cluster3.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/cluster4.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/goes11.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/goes12.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/goes13.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/goes14.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/goes15.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/geotail.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/themisa.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/themisb.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/themisc.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/themisd.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/themise.sat
