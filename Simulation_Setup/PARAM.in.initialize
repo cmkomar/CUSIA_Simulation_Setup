@@ -63,9 +63,9 @@ SWMF.grid
 #MAGNETOSPHERE
 T			body1
 2.500			Rbody
-3.500			Rcurrents
-500.			Magneto_rho_dim (/ccm) density for fixed BC for rho_BLK
-4.31E3			Magneto_T_dim (K) temperature for fixed BC for P_BLK
+3.000			Rcurrents
+28.0			Magneto_rho_dim (/ccm) density for fixed BC for rho_BLK
+25000.0			Magneto_T_dim (K) temperature for fixed BC for P_BLK
 
 #NONCONSERVATIVE
 T			UseNonConservative

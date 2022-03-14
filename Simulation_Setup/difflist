@@ -1,0 +1,14 @@
+38c38
+< 170000			!Max is 24:00
+---
+> 82000			!Max is 24:00
+205,206c205,206
+< F			IsRestart
+< F			ReadRestartSat
+---
+> T			IsRestart
+> T			ReadRestartSat
+238c238
+< #INITIALF2
+---
+> INITIALF2

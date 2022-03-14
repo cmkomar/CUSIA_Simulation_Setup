@@ -1,5 +1,5 @@
 #SATELLITE
-15			nSatellite
+13			nSatellite
 MHD			StringSatellite
 -1			DnOutput
 10.0			DtOutput
@@ -47,16 +47,16 @@ satin/themisa.sat
 MHD 			StringSatellite
 -1			DnOutput
 10.0			DtOutput
-satin/themisb.sat
-MHD 			StringSatellite
--1			DnOutput
-10.0			DtOutput
-satin/themisc.sat
-MHD 			StringSatellite
--1			DnOutput
-10.0			DtOutput
 satin/themisd.sat
 MHD 			StringSatellite
 -1			DnOutput
 10.0			DtOutput
 satin/themise.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/themisb.sat
+MHD 			StringSatellite
+-1			DnOutput
+10.0			DtOutput
+satin/themisc.sat

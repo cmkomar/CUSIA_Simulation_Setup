@@ -15,15 +15,6 @@ IM 0  11 0
 #TIMEACCURATE
 T			DoTimeAccurate
 
-STARTTIME
-2012			iYear
-10			iMonth
-08			iDay
-01			iHour
-00			iMinute
-00			iSecond
-0.0			FracSecond
-
 #ENDTIME            
 2012	    		year
 10              	month
@@ -33,22 +24,18 @@ STARTTIME
 00              	second
 0.0		        FracSecond
 
-#PROGRESS
-10			DnProgressShort
-100			DnProgressLong
-
 #SAVERESTART
 T			DoSaveRestart
 -1			DnSaveRestart
-600.0			DtSaveRestart
+300.0			DtSaveRestart
 
 #CHECKSTOP
 T			DoCheckStop
 -1			DnCheckStop
-300.0			DtCheckStop
+120.0			DtCheckStop
 
 #CPUTIMEMAX
-85000			!Max is 24:00
+430000			!Max is 24:00
 
 #COMPONENT
 IM			NameComp
@@ -64,13 +51,17 @@ IE			NameComp2
 GM			NameSource
 IM			NameTarget
 -1			DnCouple
-10.0			DtCouple
+5.0			DtCouple
 
 #COUPLE1
 IE			NameSource
 IM			NameTarget
 -1			DnCouple
-10.0			DtCouple
+5.0			DtCouple
+
+#PROGRESS
+10			DnProgressShort
+100			DnProgressLong
 
 #CHECKTIMESTEP
 F               DoCheckTimeStep
@@ -100,13 +91,13 @@ Rusanov			TypeFlux
 mc3			TypeLimiter
 1.2			LimiterBeta
 
-#TIMESTEPPING
-2			nStage
-0.85			CflExpl
-
 #BORIS
 T
 0.05
+
+#TIMESTEPPING
+2			nStage
+0.85			CflExpl
 
 #OUTERBOUNDARY
 outflow                 TypeBC_I(east_)
@@ -132,7 +123,7 @@ dt rho mx my mz p bx by bz pmin pmax dst dstdivb dstflx
 3.0 3.5 5.0		StringRFlux
 
 #IMCOUPLING
-10.0			TauCoupleIM
+5.0			TauCoupleIM
 T			DoImSatTrace
 T			DoCoupleImPressure
 T			DoCoupleImDensity
@@ -141,9 +132,9 @@ F			DoFixPolarRegion
 
 ! Pressures below pMinDim are replaced with pMinDim.
 #MINIMUMPRESSURE
-1e-5			pMinDim [nPa]
+1e-4			pMinDim [nPa]
 -1.0			pMinDim for fluid 2
-2e-5			PeMinDim for electron pressure
+2e-4			PeMinDim for electron pressure
 
 ! Density below DenMinDim are replaced with RhoMinDim.
 #MINIMUMDENSITY
@@ -193,6 +184,14 @@ GEO			TypeCoordMagGrid
 
 #BEGIN_COMP IE ---------------------------------------------------------------
 
+#IONOSPHERE
+5                       TypeConductanceModel
+F                       UseFullCurrent
+F			UseFakeRegion2
+105.9                   F107Flux
+  1.0			StarLightPedConductance
+  0.25			PolarCapPedConductance
+
 #SAVEPLOT
 1			nPlotFile
 max idl                 StringPlot
@@ -217,52 +216,18 @@ IM/restartIN/restart.H
 T			IsRestart
 T			ReadRestartSat
 
-INITIALF2
-F			IsEmptyInitial
-T			IsGmInitial
-F			IsDataInitial
-F			IsRBSPData
-
-! Number density fractions for H+ and O+. Has to add up to 1.0
-#COMPOSITION
-FIXED			NameCompModel
-0.8			Fraction_H+
-0.2			Fraction_O+
-1.0			Fraction_e-
-
-! Decay for CIMI particle densities
-#DECAY
-T 			UseDecay
-36000.			DecayTimescale in seconds
-
 #STRONGDIFFUSION
 F
+
+#SMOOTH
+F			UseSmooth
+300.0			SmoothWindow
 
 #BMODEL
 MHD			NameModel
 
 #IEMODEL
 F			UseWeimer
-
-#TYPEBOUNDARY
-Circle			TypeBoundary
-
-#PLASMASHEET
-F			UseYoungEtAl
-F			UseBoundaryEbihara
-
-#PRERUNFIELD
-T			DoWritePrerun
-F			UsePrerun
-0.0			DtRead
-
-#PRERUNSAT
-T			DoWritePrerunSat
-F			UsePrerunSat
-0.0			DtReadSat
-
-#SAVELOG
-60.0			DtLogOut
 
 #SAVEPLOT
 3			nCIMIPlotType
@@ -276,11 +241,52 @@ psd e			StringPlot
 T			DoSaveSeparateFiles
 
 #MINIMUMPRESSURETOGM
-1e-5			MinimumPressureToGM
+1e-4			MinimumPressureToGM
+
+INITIALF2
+F			IsEmptyInitial
+T			IsGmInitial
+F			IsDataInitial
+F			IsRBSPData
+
+#TYPEBOUNDARY
+Circle			TypeBoundary
+
+#PLASMASHEET
+F			UseYoungEtAl
+F			UseBoundaryEbihara
+
+#SAVELOG
+60.0			DtLogOut
+
+#PRERUNFIELD
+T			DoWritePrerun
+F			UsePrerun
+0.0			DtRead
+
+#PRERUNSAT
+T			DoWritePrerunSat
+F			UsePrerunSat
+0.0			DtReadSat
 
 #IMTIMESTEP
-10.0			IMDt
-10.0			IMDtMax
+5.0			IMDt
+5.0			IMDtMax
+
+#DTSATOUT
+5.0			DtSatOut
+
+! Number density fractions for H+ and O+. Has to add up to 1.0
+#COMPOSITION
+FIXED			NameCompModel
+0.8			Fraction_H+
+0.2			Fraction_O+
+1.0			Fraction_e-
+
+! Decay for CIMI particle densities
+#DECAY
+T 			UseDecay
+36000.			DecayTimescale in seconds
 
 #SETRB
 12.			rb [R_E]
@@ -288,9 +294,6 @@ T			DoSaveSeparateFiles
 #SETBOUNDARYPARAMS
  4.0			DeltaRmax
 10.0			DeltaMLTmax
-
-#DTSATOUT
-10.0			DtSatOut
 
 #END_COMP IM -----------------------------------------------------------------
 
