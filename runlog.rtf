@@ -1,0 +1,88 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww13440\viewh7800\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 # Run descriptions for the 2012-10-08 RBSP event for CUSIA\
+\
+\
+2501: \
+\
+2502: \
+\
+2503: \
+\
+2504: \
+\
+>>>>>\
+SWITCHED TO  SWMF_20200918 Version, much more stable\
+Also switched the #MAGNETOSPHERE command\
+	#MAGNETOSPHERE\
+	T			body1\
+	2.500			Rbody\
+	3.500			Rcurrents\
+	500.			Magneto_rho_dim (/ccm) density\
+	4.31E3			Magneto_T_dim (K) temperature \
+<<<<<\
+\
+2505: Rerun using Hartinger 28M cell grid, CIMI using UniformL grid. \
+\
+2506: Rerun using CCMC 2M cell grid, CIMI UniformL grid. \
+COMPLETED\
+\
+2507: Rerun using CUSIA grid, CIMI using UniformL grid.\
+\
+>>>>>\
+Alex expressed concerns about the boundary values, switched back to\
+BATS-R-US "defaults."\
+\
+	#BODY\
+	T                       UseBody\
+	2.5                     rBody     (in planet radius)\
+	3.0                     rCurrents (in planet radius)\
+	28.0                    BodyNDim  (/cc)\
+	25000.0                 BodyTDim  (K)\
+<<<<<\
+	\
+2508: Using Modified RCM PARAM file, running with CCMC 2M cell\
+	grid. CIMI uSing UniformL grid. NOTE: This PARAM.in did *NOT*\
+	use #MINIMUMDENSITY.\
+COMPLETED\
+\
+2509: Rerun of 2508, but using modified RCM PARAM file including\
+	#MINIMUMDENSITY. CIMI uses Expanded grid.\
+\
+2510: Using SWPC_test setup with CIMI, but will change F10.7 and IMF\
+	files as needed. Uses CIMI's ellipse boundary and the expanded\
+	grid.\
+\
+2511: Using the same PARAM commands as run2510, but now using the\
+	CUSIA grid setup. CIMI uses ellipse boundary and the expanded\
+	grid.\
+\
+2512: Rerun of 2510, uses CIMI's circle boundary and expanded grid.\
+\
+2513: Rerun of 2510, uses CIMI's ellipse boundary and UniformL grid.\
+\
+2514: Rerun of 2512, uses CIMI's circle boundary and UnifromL grid.\
+\
+>>>>> \
+\
+Runs 2505 through 2514 use SWMF_20200918 up to this point where CIMI\
+has used B_0 values at L=20 in a dipole magnetic field to calculate\
+the xmm array. To test the sensitivity of this choice, run 2515\
+changes this back to the default B_0 value. All future runs will need\
+to decide from among the possible values and how this influences the\
+simulation results.\
+\
+<<<<<\
+\
+2515: Rerun of 2510, changing the B_0 value used to initialize the xmm\
+	(Mu) grid to that at 45 R_E (default value). Was previously\
+	set at 20 R_E from a different project. Uses CIMI's ellipse\
+	boundary and expanded grid.\
+\
+2516: Rerun of 2510, except turned off #DECAY\
+}

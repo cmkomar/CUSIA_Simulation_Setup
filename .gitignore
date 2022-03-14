@@ -4,7 +4,7 @@
 *.pro
 
 # Run output directories
-run*
+run25*
 
 # Text files
 *.txt
